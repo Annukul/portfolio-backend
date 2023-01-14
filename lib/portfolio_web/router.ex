@@ -1,12 +1,15 @@
 defmodule PortfolioWeb.Router do
+  alias PortfolioWeb.UserController
   use PortfolioWeb, :router
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/api", PortfolioWeb do
+  scope "/api/v1" do
     pipe_through :api
+
+    post "/create", UserController, :create
   end
 
   # Enables LiveDashboard only for development
