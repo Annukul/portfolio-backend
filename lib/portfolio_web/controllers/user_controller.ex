@@ -19,6 +19,15 @@ defmodule PortfolioWeb.UserController do
     end
   end
 
+  def sign_in(conn, %{"email" => email, "password" => password}) do
+    case Users.token_sign_in(email, password) do
+      {:ok, token, _claims} ->
+        conn |> render("jwt.json", jwt: token)
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
   def show(conn, %{"id" => id}) do
     user = Users.get_user!(id)
     render(conn, "show.json", user: user)
