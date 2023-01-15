@@ -1,4 +1,5 @@
 defmodule PortfolioWeb.Router do
+  alias PortfolioWeb.PostController
   alias PortfolioWeb.UserController
   use PortfolioWeb, :router
   alias Portfolio.Guardian
@@ -22,6 +23,7 @@ defmodule PortfolioWeb.Router do
     pipe_through [:api, :jwt_authenticated]
 
     # Protected routes goes here
+    resources "/post", PostController, only: [:index, :show, :create, :update, :delete]
   end
 
   # Enables LiveDashboard only for development
