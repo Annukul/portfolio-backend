@@ -1,9 +1,14 @@
 defmodule PortfolioWeb.Router do
   alias PortfolioWeb.UserController
   use PortfolioWeb, :router
+  alias Portfolio.Guardian
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :jwt_authenticated do
+    plug Guardian.AuthPipeline
   end
 
   scope "/api/v1" do
@@ -11,6 +16,12 @@ defmodule PortfolioWeb.Router do
 
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
+  end
+
+  scope "/api/v1" do
+    pipe_through [:api, :jwt_authenticated]
+
+    # Protected routes goes here
   end
 
   # Enables LiveDashboard only for development
