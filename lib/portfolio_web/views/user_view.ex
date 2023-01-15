@@ -16,9 +16,12 @@ defmodule PortfolioWeb.UserView do
       name: user.name,
       user_name: user.user_name,
       email: user.email,
-      password: user.password,
       active: user.active,
       role: user.role
     }
+  end
+
+  def render("jwt.json", %{jwt: jwt}) do
+    %{jwt: jwt}
   end
 end

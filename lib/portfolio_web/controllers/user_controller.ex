@@ -3,6 +3,7 @@ defmodule PortfolioWeb.UserController do
 
   alias Portfolio.Users
   alias Portfolio.Users.User
+  alias Portfolio.Guardian
 
   action_fallback PortfolioWeb.FallbackController
 
@@ -12,11 +13,9 @@ defmodule PortfolioWeb.UserController do
   end
 
   def create(conn, params) do
-    with {:ok, %User{} = user} <- Users.create_user(params) do
-      conn
-      |> put_status(:created)
-      # |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
+    with {:ok, %User{} = user} <- Users.create_user(params),
+         {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
+      conn |> render("jwt.json", jwt: token)
     end
   end
 

@@ -28,7 +28,7 @@ defmodule Portfolio.Users.User do
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password_virtual, min: 8)
     |> validate_confirmation(:password_virtual)
-    |> unique_constraint(:email)
+    |> unique_constraint([:email, :user_name])
     |> put_password_hash
   end
 

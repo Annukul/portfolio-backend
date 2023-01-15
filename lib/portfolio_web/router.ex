@@ -9,7 +9,7 @@ defmodule PortfolioWeb.Router do
   scope "/api/v1" do
     pipe_through :api
 
-    post "/create", UserController, :create
+    post "/sign_up", UserController, :create
   end
 
   # Enables LiveDashboard only for development
