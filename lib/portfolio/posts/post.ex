@@ -17,7 +17,7 @@ defmodule Portfolio.Posts.Post do
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, [:title, :excerpt, :content, :likes, :dislikes, :user_id])
+    |> cast(attrs, [:title, :excerpt, :content, :user_id])
     |> validate_required([:title, :content, :user_id])
     |> validate_length(:title, min: 20)
   end
